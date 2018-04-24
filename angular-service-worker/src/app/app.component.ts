@@ -59,7 +59,7 @@ interface IDotaMatch {
 })
 export class AppComponent {
   title = 'DotA 2 Statistics';
-  sample_url = 'https://api.steampowered.com/IDOTA2Match_570/GetMatchDetails/V001/?match_id=27110133&key=978ED817D9A374D625A92CFD14C341A9';
+  sample_url = 'http://localhost:3000/getnews';
   url = 'https://api.steampowered.com/IDOTA2Match_570/GetMatchDetails/V001/?';
   match_id = '27110133';
   api_key = '978ED817D9A374D625A92CFD14C341A9';
@@ -76,7 +76,7 @@ export class AppComponent {
   getData() {
     this.match = this.httpClient.get<IDotaMatch>(this.sample_url);
     this.match.subscribe(match =>{
-      this.inc = "yes";
+      this.inc = "Match duration: " + match.duration;
     })
   }
 
