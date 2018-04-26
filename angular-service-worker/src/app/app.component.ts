@@ -27,29 +27,31 @@ interface IDotaPlayer {
 }
 
 interface IDotaMatch {
-  players: IDotaPlayer[];
-  radiant_win: boolean;
-  duration: number;
-  pre_game_duration: number;
-  start_time: number;
-  match_id: number;
-  match_seq_num: number;
-  tower_status_radiant: number;
-  tower_status_dire: number;
-  barracks_status_radiant: number;
-  barracks_status_dire: number;
-  cluster: number;
-  first_blood_time: number;
-  lobby_type: number;
-  human_players: number;
-  leagueid: number;
-  positive_votes: number;
-  negative_votes: number;
-  game_mode: number;
-  flags: number;
-  engine: number;
-  radiant_score: number;
-  dire_score: number;
+  result: {
+    players: IDotaPlayer[];
+    radiant_win: boolean;
+    duration: number;
+    pre_game_duration: number;
+    start_time: number;
+    match_id: number;
+    match_seq_num: number;
+    tower_status_radiant: number;
+    tower_status_dire: number;
+    barracks_status_radiant: number;
+    barracks_status_dire: number;
+    cluster: number;
+    first_blood_time: number;
+    lobby_type: number;
+    human_players: number;
+    leagueid: number;
+    positive_votes: number;
+    negative_votes: number;
+    game_mode: number;
+    flags: number;
+    engine: number;
+    radiant_score: number;
+    dire_score: number;
+  }
 }
 
 @Component({
@@ -60,12 +62,12 @@ interface IDotaMatch {
 export class AppComponent {
   title = 'DotA 2 Statistics';
   sample_url = 'http://localhost:3000/getnews';
-  url = 'https://api.steampowered.com/IDOTA2Match_570/GetMatchDetails/V001/?';
   match_id = '27110133';
-  api_key = '978ED817D9A374D625A92CFD14C341A9';
   private httpClient: HttpClient;
   match: Observable<IDotaMatch>;
-  inc = "none";
+  winner: string;
+  duration: string  = "";
+  fbtime: string = "";
 
   constructor(httpClient: HttpClient) {
     // Test Data:
@@ -75,8 +77,16 @@ export class AppComponent {
 
   getData() {
     this.match = this.httpClient.get<IDotaMatch>(this.sample_url);
-    this.match.subscribe(match =>{
-      this.inc = "Match duration: " + match.duration;
+    //{headers: new HttpHeaders().set('match-id', this.match_id)}
+    this.match.subscribe(match => {
+      console.log("responded");
+      if (match.result.radiant_win) {
+        this.winner = "Radiant";
+      } else {
+        this.winner = "Dire";
+      }
+      this.duration = match.result.duration/100 + " min";
+      this.fbtime = match.result.first_blood_time/60 + "min";
     })
   }
 

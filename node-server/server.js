@@ -17,7 +17,6 @@ app.get('/getnews', function(req, res) {
 	var url = 'https://api.steampowered.com/IDOTA2Match_570/GetMatchDetails/V001/?match_id=27110133&key=978ED817D9A374D625A92CFD14C341A9';
 	request(url, function(err, response, body) {
 		if(!err && response.statusCode < 400) {
-			console.log(body);
 			res.send(body);
 		}
 	});	

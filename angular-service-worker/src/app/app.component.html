@@ -1,3 +1,25 @@
-<h1>{{ title }}</h1>
+<h1 class="center-align">{{ title }}</h1>
 
-<p>{{inc}}</p>
+
+<form class="center-align">
+    <div class="input-field inline ">
+        <input type="text" placeholder="Match ID">
+        <button class="center-align waves-effect waves-light btn-large">Get results</button>
+    </div>
+</form>
+
+<div class="center-align">
+    <div class="row">
+        <div class="col s6">
+            <h5>Gewinner: {{winner}}</h5>
+        </div>
+        <div class="col s6">
+            <h5>Spieldauer: {{duration}}</h5>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col s6">
+            <h5>First Blood: {{fbtime}}</h5>
+        </div>
+    </div>
+</div>
